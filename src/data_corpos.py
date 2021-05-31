@@ -1,0 +1,23 @@
+CORPOS = [
+    "Atos",
+    "BNY Mellon",
+    "Capgemini",
+    "Credit Suisse",
+    "Espotel",
+    "EYGlobalService",
+    "Google",
+    "Hewlett Packard",
+    "McKinsey",
+    "Merck",
+    "Nokia Networks",
+    "Qatar Airways",
+    "Luxoft",
+    "Tieto",
+    "Volvo",
+    "Unit4.",
+    "Ryanair",
+    "Toyota",
+    "UBS",
+    "Axiom Law",
+    "DataArt"
+]

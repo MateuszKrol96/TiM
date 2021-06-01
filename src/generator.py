@@ -1,10 +1,8 @@
-from random import choice, choices
-
-import numpy
+from random import choice
 
 from src import data_names
-from src import data_corpos
 from src import data_districts
+from collections import Counter
 
 import numpy as np
 
@@ -52,7 +50,6 @@ def generate_people(number=25):
             temp_fun_district = "NIE WROCLAW"
 
         temp_age = choice(age)
-        # temp_person = f"{temp_name} {temp_surname} wiek:  {temp_age} plec:  {gender} dom: {temp_home_district} praca {temp_work_district} rozrywka {temp_fun_district}"
         temp_person = {
             "ID": e + 1,
             "Imie": temp_name,
@@ -65,3 +62,33 @@ def generate_people(number=25):
         names_list.append(temp_person)
 
     return names_list
+
+
+def generate_peoples_journeys(people):
+    transport_medium = ["car", "car", "tram", "bus", "bike", "car", "car", "car", "car", "on foot"]
+    for e in people:
+        e['podroze'] = {}
+        if e.get('dom') != e.get('praca') and e.get('praca') != 'NIE WROCLAW':
+            e['podroze']['dom-praca'] = choice(transport_medium)
+        if e.get('dom') != e.get('rozrywka') and e.get('rozrywka') != 'NIE WROCLAW':
+            # people.remove(e)
+            e['podroze']['dom-rozrywka'] = choice(transport_medium)
+
+
+def count_journeys(full_info):
+    zaparkowania = {"praca" : [], "rozrywka" : []}
+    for e in full_info:
+        if 'dom-praca' in e['podroze']:
+            zaparkowania['praca'].append(e['praca'])
+        if 'dom-rozrywka' in e['podroze']:
+            zaparkowania['rozrywka'].append(e['rozrywka'])
+    full_list = {"praca": {}, "rozrywka" : {}}
+    t_list = dict(Counter(zaparkowania['praca']))
+    full_list['praca'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))
+    # print(full_list)
+
+    t_list = dict(Counter(zaparkowania['rozrywka']))
+    full_list['rozrywka'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))
+
+    print(full_list)
+

@@ -3,7 +3,7 @@ from collections import Counter
 
 print("Generowanie osób")
 
-people_number = 120000
+people_number = 1200
 
 people = generate_people(people_number)
 generate_peoples_journeys(people)

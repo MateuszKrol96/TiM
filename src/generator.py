@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, choices
 
 from src import data_names
 from src import data_districts
@@ -21,6 +21,10 @@ def generate_people(number=25):
     list_first_names_f = data_names.FIRST_NAMES_F
     list_second_names_f = data_names.LAST_NAMES_F
     district_population = data_districts.DISTRICTS
+    wages_districts = [41, 43, 22, 3, 9, 48, 17, 14, 20, 27, 12, 56, 9, 5, 1, 22,
+                       12, 34, 36, 9, 10, 32, 9, 10, 48, 37, 10, 9, 56, 10, 3, 2,
+                       5, 3, 7, 49, 5, 10, 1, 2, 24, 17, 34, 37, 41, 58, 24, 7
+                       ]
     out_of_city = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     age = np.arange(18, 70)
     genders = ["M", "K"]
@@ -35,17 +39,17 @@ def generate_people(number=25):
             temp_name = choice(list_first_names_f)
             temp_surname = choice(list_second_names_f)
         if number < wroclaw_population and (choice(out_of_city)) == 0:
-            temp_home_district = choice(district_population)
+            temp_home_district = choices(district_population, wages_districts)[0]
         else:
             temp_home_district = "NIE WROCLAW"
 
         if choice(out_of_city) == 0:
-            temp_work_district = choice(district_population)
+            temp_work_district = choices(district_population, wages_districts)[0]
         else:
             temp_work_district = "NIE WROCLAW"
 
         if choice(out_of_city) == 0:
-            temp_fun_district = choice(district_population)
+            temp_fun_district = choices(district_population, wages_districts)[0]
         else:
             temp_fun_district = "NIE WROCLAW"
 
@@ -76,16 +80,15 @@ def generate_peoples_journeys(people):
 
 
 def count_journeys(full_info):
-    zaparkowania = {"praca" : [], "rozrywka" : []}
+    zaparkowania = {"praca": [], "rozrywka": []}
     for e in full_info:
         if 'dom-praca' in e['podroze']:
             zaparkowania['praca'].append(e['praca'])
         if 'dom-rozrywka' in e['podroze']:
             zaparkowania['rozrywka'].append(e['rozrywka'])
-    full_list = {"praca": {}, "rozrywka" : {}}
+    full_list = {"praca": {}, "rozrywka": {}}
     t_list = dict(Counter(zaparkowania['praca']))
     full_list['praca'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))
-    # print(full_list)
 
     t_list = dict(Counter(zaparkowania['rozrywka']))
     full_list['rozrywka'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))

@@ -92,6 +92,6 @@ def count_journeys(full_info):
 
     t_list = dict(Counter(zaparkowania['rozrywka']))
     full_list['rozrywka'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))
-
-    print(full_list)
+    # print(full_list)
+    return full_list
 

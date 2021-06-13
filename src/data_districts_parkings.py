@@ -27,7 +27,7 @@ DISTRICTS_CAR_PARKING = {
     "Przedmieście Oławskie": 980,
     "Tarnogaj": 600,
     "Wojszyce": 500,
-    "Karłowice - Różanka": 3300,
+    "Karłowice - Różanka": 1050,
     "Kleczków": 300,
     "Kowale": 200,
     "Lipa Piotrowska": 100,

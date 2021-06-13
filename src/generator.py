@@ -1,3 +1,4 @@
+import random
 from random import choice, choices
 
 from src import data_names
@@ -26,12 +27,11 @@ def generate_people(number=25):
                        5, 3, 7, 49, 5, 10, 1, 2, 24, 17, 34, 37, 41, 58, 24, 7
                        ]
     out_of_city = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-    age = np.arange(18, 70)
+    age = np.arange(18, 72)
     genders = ["M", "K"]
-
     names_list = []
     for e in range(number):
-        gender = choice(genders)
+        gender = random.choices(genders, weights = [18, 25], k= 1)[0]
         if gender == "M":
             temp_name = choice(list_first_names_m)
             temp_surname = choice(list_second_names_m)
@@ -53,7 +53,7 @@ def generate_people(number=25):
         else:
             temp_fun_district = "NIE WROCLAW"
 
-        temp_age = choice(age)
+        temp_age = round(random.randint(18,71))
         temp_person = {
             "ID": e + 1,
             "Imie": temp_name,
@@ -94,4 +94,23 @@ def count_journeys(full_info):
     full_list['rozrywka'] = dict(sorted(t_list.items(), key=lambda x: x[1], reverse=True))
     # print(full_list)
     return full_list
+
+def generate_peoples_opinions(people, parking_occupation):
+    for e in people:
+        basic_opinion = round(random.uniform(0.5, 1),2)
+        work = e.get('praca')
+        fun = e.get('rozrywka')
+        if not work == 'NIE WROCLAW':
+            if parking_occupation.get(work) > 10:
+                basic_opinion -= 0.2
+            elif 1 < parking_occupation.get(work) < 10:
+                basic_opinion -= 0.1
+        if not fun == 'NIE WROCLAW':
+            if parking_occupation.get(fun) > 10:
+                basic_opinion -= 0.2
+            elif 1 < parking_occupation.get(fun) < 10:
+                basic_opinion -= 0.1
+        e['opinion'] = round(basic_opinion, 2)
+    return people
+
 
